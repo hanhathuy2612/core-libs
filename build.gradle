@@ -1,3 +1,13 @@
+// Disable bootJar task for this library project
+bootJar {
+    enabled = false
+}
+
+// Ensure regular JAR is enabled for library distribution
+jar {
+    enabled = true
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'java-library'
@@ -13,5 +23,16 @@ subprojects {
     java {
         withSourcesJar()
         withJavadocJar()
+    }
+    
+    // Disable bootJar task for library modules since this is a library, not an application
+    bootJar {
+        enabled = false
+    }
+    
+    // Ensure regular JAR is enabled for library distribution
+    jar {
+        enabled = true
+        archiveClassifier = '' // Remove classifier to make this the main JAR
     }
 }
