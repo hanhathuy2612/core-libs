@@ -30,7 +30,7 @@ public class SecurityConfiguration {
     }
     
     @Bean
-    @ConditionalOnProperty(value = "security.cors.enabled", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "app.security.cors.enabled", havingValue = "true", matchIfMissing = true)
     public CorsFilter corsFilter(SecurityService securityService) {
         return securityService.corsFilter();
     }
