@@ -4,7 +4,6 @@ import com.hnh.enterprise.core.entity.Authority;
 import com.hnh.enterprise.core.entity.User;
 import com.hnh.enterprise.core.security.properties.SecurityProperties;
 import com.hnh.enterprise.core.service.UserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtException;
@@ -24,8 +23,11 @@ public class RegularJwtDecoder {
     private final UserService userService;
     private final NimbusJwtDecoder nimbusJwtDecoder;
 
+    private static final String HEADER_AUTHORITIES = "authorities";
+
     public RegularJwtDecoder(SecurityProperties securityProperties, UserService userService) {
-        this.nimbusJwtDecoder = NimbusJwtDecoder.withSecretKey(getSecretKey(securityProperties.getJwt().getBase64Secret()))
+        this.nimbusJwtDecoder = NimbusJwtDecoder
+                .withSecretKey(getSecretKey(securityProperties.getJwt().getBase64Secret()))
                 .macAlgorithm(JWT_ALGORITHM)
                 .build();
         this.userService = userService;
@@ -36,12 +38,12 @@ public class RegularJwtDecoder {
 
         Map<String, Object> claims = new HashMap<>(jwt.getClaims());
 
-        if (!claims.containsKey("authorities")) {
+        if (!claims.containsKey(HEADER_AUTHORITIES)) {
             String email = jwt.getSubject();
             User user = userService.getUserWithAuthoritiesByLogin(email)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
-            claims.put("authorities", user.getAuthorities().stream()
+            claims.put(HEADER_AUTHORITIES, user.getAuthorities().stream()
                     .map(Authority::getName)
                     .toList());
         }
