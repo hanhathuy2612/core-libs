@@ -2,6 +2,7 @@ package com.hnh.enterprise.core.security.jwt;
 
 import com.hnh.enterprise.core.entity.Authority;
 import com.hnh.enterprise.core.entity.User;
+import com.hnh.enterprise.core.security.properties.SecurityProperties;
 import com.hnh.enterprise.core.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,10 +24,8 @@ public class RegularJwtDecoder {
     private final UserService userService;
     private final NimbusJwtDecoder nimbusJwtDecoder;
 
-    public RegularJwtDecoder(@Value("${app.security.jwt.secret}") String jwtKey,
-            UserService userService) {
-
-        this.nimbusJwtDecoder = NimbusJwtDecoder.withSecretKey(getSecretKey(jwtKey))
+    public RegularJwtDecoder(SecurityProperties securityProperties, UserService userService) {
+        this.nimbusJwtDecoder = NimbusJwtDecoder.withSecretKey(getSecretKey(securityProperties.getJwt().getBase64Secret()))
                 .macAlgorithm(JWT_ALGORITHM)
                 .build();
         this.userService = userService;

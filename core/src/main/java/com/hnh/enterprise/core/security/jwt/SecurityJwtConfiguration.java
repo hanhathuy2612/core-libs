@@ -1,5 +1,6 @@
 package com.hnh.enterprise.core.security.jwt;
 
+import com.hnh.enterprise.core.security.properties.SecurityProperties;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.util.Base64;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,8 @@ import static com.hnh.enterprise.core.security.constant.Constant.JWT_ALGORITHM;
 public class SecurityJwtConfiguration {
     
     private static final Logger LOG = LoggerFactory.getLogger(SecurityJwtConfiguration.class);
-    
-    @Value("${app.security.authentication.jwt.base64-secret}")
-    private String jwtKey;
+
+    private final SecurityProperties securityProperties;
     
     @Bean
     public JwtDecoder jwtDecoder(List<JwtDecoderStrategy> strategies) {
@@ -40,7 +40,7 @@ public class SecurityJwtConfiguration {
     }
     
     private SecretKey getSecretKey() {
-        byte[] keyBytes = Base64.from(jwtKey).decode();
+        byte[] keyBytes = Base64.from(securityProperties.getJwt().getBase64Secret()).decode();
         return new SecretKeySpec(keyBytes, 0, keyBytes.length, JWT_ALGORITHM.getName());
     }
 }

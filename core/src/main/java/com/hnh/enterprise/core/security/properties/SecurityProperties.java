@@ -1,4 +1,4 @@
-package com.hnh.enterprise.core.security;
+package com.hnh.enterprise.core.security.properties;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -53,6 +53,9 @@ public class SecurityProperties {
     
     @JsonProperty("cors")
     private Cors cors;
+
+    @JsonProperty("jwt")
+    private Jwt jwt;
     
     @Getter
     @Setter
@@ -65,5 +68,12 @@ public class SecurityProperties {
         
         @JsonProperty("allowed-headers")
         private List<String> allowedHeaders = new ArrayList<>();
+    }
+
+    @Getter
+    @Setter
+    public static class Jwt {
+        @JsonProperty("base64-secret")
+        private String base64Secret;
     }
 }

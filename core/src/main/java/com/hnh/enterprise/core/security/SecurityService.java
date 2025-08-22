@@ -11,6 +11,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.hnh.enterprise.core.security.properties.SecurityProperties;
+
 import java.util.List;
 import java.util.Objects;
 
