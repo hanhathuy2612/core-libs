@@ -53,8 +53,6 @@ public class UserDTO extends AuditingDTO {
 
     private Set<String> authorities;
 
-    private String fullName;
-
     private boolean twoFactorAuth;
 
     private boolean passwordChangeReminder;
