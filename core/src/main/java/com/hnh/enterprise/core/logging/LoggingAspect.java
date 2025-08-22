@@ -17,7 +17,7 @@ import java.util.Arrays;
 @Aspect
 public class LoggingAspect {
     
-    @Pointcut("@within(com.film.core.common.logging.Logging) || @annotation(com.film.core.common.logging.Logging)")
+    @Pointcut("@within(com.hnh.enterprise.core.logging.Logging) || @annotation(com.hnh.enterprise.core.logging.Logging)")
     public void applicationPackagePointcut() {
     }
     
