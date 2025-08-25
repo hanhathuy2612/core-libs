@@ -6,9 +6,10 @@ import com.hnh.enterprise.core.open_api.EnableOpenApi;
 import com.hnh.enterprise.core.security.EnableSecurity;
 
 import java.lang.annotation.*;
+
 /**
  * Enable common features for the application.
- * 
+ *
  * @author hnh
  * @version 1.0
  * @since 1.0
