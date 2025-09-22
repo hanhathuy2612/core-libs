@@ -23,7 +23,7 @@ public class RegularJwtDecoder {
     private final UserService userService;
     private final NimbusJwtDecoder nimbusJwtDecoder;
 
-    private static final String HEADER_AUTHORITIES = "authorities";
+    private static final String HEADER_AUTHORITIES = "auth";
 
     public RegularJwtDecoder(SecurityProperties securityProperties, UserService userService) {
         this.nimbusJwtDecoder = NimbusJwtDecoder

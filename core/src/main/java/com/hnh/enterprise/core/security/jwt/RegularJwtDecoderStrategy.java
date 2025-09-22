@@ -12,7 +12,6 @@ import java.util.Base64;
  * Strategy for decoding regular JWT tokens (non-Firebase).
  * This handles the standard JWT tokens used by the application.
  */
-@Component
 @Slf4j
 public class RegularJwtDecoderStrategy implements JwtDecoderStrategy {
     
