@@ -13,6 +13,6 @@ public class AuditAwareImpl implements AuditorAware<String> {
     @Override
     @NonNull
     public Optional<String> getCurrentAuditor() {
-        return Optional.of(SecurityUtils.getCurrentUserEmail().orElse(AuthoritiesConstants.SYSTEM.getValue()));
+        return Optional.of(SecurityUtils.getCurrentUserEmail().orElse(Authorities.SYSTEM.getValue()));
     }
 }

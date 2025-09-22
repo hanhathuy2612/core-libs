@@ -16,7 +16,7 @@ import com.hnh.enterprise.core.entity.User;
 import com.hnh.enterprise.core.enumeration.AuthProvider;
 import com.hnh.enterprise.core.repository.AuthorityRepository;
 import com.hnh.enterprise.core.repository.UserRepository;
-import com.hnh.enterprise.core.security.AuthoritiesConstants;
+import com.hnh.enterprise.core.security.Authorities;
 import com.hnh.enterprise.core.service.UserService;
 import com.hnh.enterprise.core.util.RandomUtil;
 
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
             // Set default USER authority
             Set<Authority> authorities = new HashSet<>();
-            authorityRepository.findById(AuthoritiesConstants.USER.getValue()).ifPresent(authorities::add);
+            authorityRepository.findById(Authorities.USER.getValue()).ifPresent(authorities::add);
             newUser.setAuthorities(authorities);
 
             newUser = userRepository.save(newUser);

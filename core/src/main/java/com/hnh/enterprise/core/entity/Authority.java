@@ -35,6 +35,10 @@ public class Authority implements Serializable, Persistable<String> {
     
     @Transient
     private boolean isPersisted;
+
+    public Authority(String name) {
+        this.name = name;
+    }
     
     @PostLoad
     @PostPersist

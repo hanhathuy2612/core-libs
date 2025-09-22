@@ -3,6 +3,7 @@ package com.hnh.enterprise.core.annotations;
 
 import com.hnh.enterprise.core.logging.EnableLogging;
 import com.hnh.enterprise.core.open_api.EnableOpenApi;
+import com.hnh.enterprise.core.rest.EnableAuthAPI;
 import com.hnh.enterprise.core.security.EnableSecurity;
 
 import java.lang.annotation.*;
@@ -20,5 +21,6 @@ import java.lang.annotation.*;
 @EnableSecurity
 @EnableLogging
 @EnableOpenApi
+@EnableAuthAPI
 public @interface EnableCommon {
 }

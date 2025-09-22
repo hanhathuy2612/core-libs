@@ -108,13 +108,7 @@ public class User extends AbstractAuditingEntity<Long> {
 
     @Builder.Default
     @Column(name = "two_factor_auth")
-    private boolean twoFactorAuth = false;
-
-    @Column(name = "password_change_reminder")
-    private boolean passwordChangeReminder;
-
-    @Column(name = "password_changed_date")
-    private LocalDate passwordChangedDate;
+    private Boolean twoFactorAuth = false;
 
     @JsonIgnore
     @ManyToMany

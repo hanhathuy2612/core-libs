@@ -6,7 +6,7 @@ import lombok.Getter;
  * Constants for Spring Security authorities.
  */
 @Getter
-public enum AuthoritiesConstants {
+public enum Authorities {
     /**
      * Role for users with full administrative privileges.
      */
@@ -29,7 +29,7 @@ public enum AuthoritiesConstants {
     
     private final String value;
     
-    AuthoritiesConstants(String value) {
+    Authorities(String value) {
         this.value = value;
     }
     
