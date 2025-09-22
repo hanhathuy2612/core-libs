@@ -1,12 +1,13 @@
 package com.hnh.enterprise.core.security.jwt;
 
-import com.hnh.enterprise.core.security.SecurityMetersService;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Base64;
+
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtException;
-import org.springframework.stereotype.Component;
 
-import java.util.Base64;
+import com.hnh.enterprise.core.security.SecurityMetersService;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Strategy for decoding regular JWT tokens (non-Firebase).
