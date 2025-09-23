@@ -1,10 +1,8 @@
-// Disable bootJar task for this library project
-bootJar {
+// Ensure regular JARs are produced and disable Spring Boot bootJar when present
+tasks.matching { it.name == 'bootJar' }.configureEach {
     enabled = false
 }
-
-// Ensure regular JAR is enabled for library distribution
-jar {
+tasks.withType(org.gradle.api.tasks.bundling.Jar).configureEach {
     enabled = true
 }
 
@@ -25,14 +23,15 @@ subprojects {
         withJavadocJar()
     }
     
-    // Disable bootJar task for library modules since this is a library, not an application
-    bootJar {
+    // Configure tasks defensively across subprojects
+    tasks.matching { it.name == 'bootJar' }.configureEach {
         enabled = false
     }
-    
-    // Ensure regular JAR is enabled for library distribution
-    jar {
+    tasks.withType(org.gradle.api.tasks.bundling.Jar).configureEach {
         enabled = true
-        archiveClassifier = '' // Remove classifier to make this the main JAR
+        // Remove classifier to make this the main JAR
+        if (respondsTo('getArchiveClassifier')) {
+            archiveClassifier.set('')
+        }
     }
 }
