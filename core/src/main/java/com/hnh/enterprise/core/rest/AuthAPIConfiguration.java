@@ -22,8 +22,11 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 })
 public class AuthAPIConfiguration {
     @Bean
-    public AuthenticationService authenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                                                       AuthenticationManagerBuilder authenticationManager, JwtEncoder jwtEncoder, SecurityProperties securityProperties) {
+    public AuthenticationService authenticationService(UserRepository userRepository,
+                                                       PasswordEncoder passwordEncoder,
+                                                       AuthenticationManagerBuilder authenticationManager,
+                                                       JwtEncoder jwtEncoder,
+                                                       SecurityProperties securityProperties) {
         return new AuthenticationServiceImpl(passwordEncoder, userRepository, authenticationManager, jwtEncoder, securityProperties);
     }
 
