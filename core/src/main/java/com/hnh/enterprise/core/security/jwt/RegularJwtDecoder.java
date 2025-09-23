@@ -39,14 +39,16 @@ public class RegularJwtDecoder {
         Map<String, Object> claims = new HashMap<>(jwt.getClaims());
 
         if (!claims.containsKey(HEADER_AUTHORITIES)) {
-            String email = jwt.getSubject();
-            User user = userService.getUserWithAuthoritiesByLogin(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
-
-            claims.put(HEADER_AUTHORITIES, user.getAuthorities().stream()
-                    .map(Authority::getName)
-                    .toList());
+            throw new JwtException("Token does not contain authorities");
         }
+
+        String email = jwt.getSubject();
+        User user = userService.getUserWithAuthoritiesByLogin(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
+
+        claims.put(HEADER_AUTHORITIES, user.getAuthorities().stream()
+                .map(Authority::getName)
+                .toList());
 
         return new Jwt(
                 jwt.getTokenValue(),

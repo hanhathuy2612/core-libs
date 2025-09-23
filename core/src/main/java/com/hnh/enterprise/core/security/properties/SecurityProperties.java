@@ -79,5 +79,7 @@ public class SecurityProperties {
         private long tokenValidityInSeconds;
 
         private long tokenValidityInSecondsForRememberMe;
+
+        private long refreshTokenValidityInSeconds;
     }
 }
