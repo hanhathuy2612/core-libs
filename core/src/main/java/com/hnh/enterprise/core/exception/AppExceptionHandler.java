@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.hnh.enterprise.core.rest.response.BaseResponse.ErrorResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * Handles exceptions globally for the application.
  */
 @Slf4j
+@RestControllerAdvice
 public class AppExceptionHandler {
 
     /**

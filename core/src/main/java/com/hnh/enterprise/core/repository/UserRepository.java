@@ -13,7 +13,7 @@ import java.util.Optional;
  * Spring Data JPA repository for the {@link User} entity.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends BaseRepository<User, Long> {
     String USERS_BY_EMAIL_CACHE = "usersByEmail";
 
     @EntityGraph(attributePaths = "authorities")
