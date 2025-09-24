@@ -22,6 +22,7 @@ public class RegularJwtDecoder {
     private final NimbusJwtDecoder nimbusJwtDecoder;
 
     private static final String HEADER_AUTHORITIES = "auth";
+    public static final String USER_ID = "user_id";
 
     public RegularJwtDecoder(SecurityProperties securityProperties, UserService userService) {
         this.nimbusJwtDecoder = NimbusJwtDecoder
@@ -47,6 +48,7 @@ public class RegularJwtDecoder {
         claims.put(HEADER_AUTHORITIES, user.getAuthorities().stream()
                 .map(Authority::getName)
                 .toList());
+        claims.put(USER_ID, user.getId());
 
         return new Jwt(
                 jwt.getTokenValue(),

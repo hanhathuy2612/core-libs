@@ -6,10 +6,13 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimNames;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import static com.hnh.enterprise.core.security.jwt.RegularJwtDecoder.USER_ID;
 
 /**
  * Utility class for Spring Security.
@@ -41,7 +44,7 @@ public final class SecurityUtils {
         } else if (authentication.getPrincipal() instanceof UserDetails userDetails) {
             return userDetails.getUsername();
         } else if (authentication.getPrincipal() instanceof Jwt jwt) {
-            return jwt.getClaim("preferred_username");
+            return jwt.getClaim(JwtClaimNames.SUB);
         } else if (authentication.getPrincipal() instanceof String principal) {
             return principal;
         }
@@ -66,15 +69,13 @@ public final class SecurityUtils {
      *
      * @return an Optional containing the user ID if available, otherwise an empty Optional.
      */
-    public static Optional<String> getCurrentUserId() {
+    public static Optional<Long> getCurrentUserId() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional
                 .ofNullable(securityContext.getAuthentication())
                 .map(authentication -> {
                     if (authentication.getPrincipal() instanceof Jwt jwt) {
-                        return jwt.getClaim("sub");
-                    } else if (authentication.getPrincipal() instanceof String principal) {
-                        return principal;
+                        return jwt.getClaim(USER_ID);
                     }
                     return null;
                 });

@@ -46,13 +46,13 @@ public class TokenServiceImpl implements TokenService {
                 .build();
     }
 
-    private String createToken(Authentication authentication, boolean rememberMe) {
+    private String createToken(Authentication authentication, Boolean rememberMe) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
 
         Instant now = Instant.now();
         Instant validity;
-        if (rememberMe) {
+        if (Boolean.TRUE.equals(rememberMe)) {
             validity = now.plus(securityProperties.getJwt().getTokenValidityInSecondsForRememberMe(),
                     ChronoUnit.SECONDS);
         } else {

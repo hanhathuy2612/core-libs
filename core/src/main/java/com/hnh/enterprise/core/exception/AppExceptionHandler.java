@@ -1,14 +1,13 @@
 package com.hnh.enterprise.core.exception;
 
+import com.hnh.enterprise.core.rest.response.BaseResponse.ErrorResponse;
+import io.swagger.v3.oas.annotations.Hidden;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import com.hnh.enterprise.core.rest.response.BaseResponse.ErrorResponse;
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -16,15 +15,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @Slf4j
 @RestControllerAdvice
+@Hidden
 public class AppExceptionHandler {
 
     /**
      * Handles MethodArgumentNotValidException, which is thrown when a method
      * argument fails validation.
-     * 
+     *
      * @param ex the exception that was thrown
      * @return a ResponseEntity containing an ErrorResponse with a BAD_REQUEST
-     *         status
+     * status
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse<?>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
@@ -40,10 +40,10 @@ public class AppExceptionHandler {
     /**
      * Handles AppRuntimeException, which is a custom runtime exception for the
      * application.
-     * 
+     *
      * @param ex the exception that was thrown
      * @return a ResponseEntity containing an ErrorResponse with the status and
-     *         message from the exception
+     * message from the exception
      */
     @ExceptionHandler(AppRuntimeException.class)
     public ResponseEntity<ErrorResponse<?>> handle(AppRuntimeException ex) {
@@ -60,7 +60,7 @@ public class AppExceptionHandler {
     /**
      * Handles AccessDeniedException, which is thrown when access to a resource is
      * denied.
-     * 
+     *
      * @param ex the exception that was thrown
      * @return a ResponseEntity containing an ErrorResponse with a FORBIDDEN status
      */
@@ -73,10 +73,10 @@ public class AppExceptionHandler {
     /**
      * Handles IllegalArgumentException, which is thrown when an illegal or
      * inappropriate argument is passed.
-     * 
+     *
      * @param ex the exception that was thrown
      * @return a ResponseEntity containing an ErrorResponse with a BAD_REQUEST
-     *         status
+     * status
      */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse<?>> handle(IllegalArgumentException ex) {
@@ -87,10 +87,10 @@ public class AppExceptionHandler {
     /**
      * Handles all other exceptions that are not specifically handled by other
      * methods.
-     * 
+     *
      * @param ex the exception that was thrown
      * @return a ResponseEntity containing an ErrorResponse with an
-     *         INTERNAL_SERVER_ERROR status
+     * INTERNAL_SERVER_ERROR status
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse<?>> handle(Exception ex) {
@@ -100,11 +100,11 @@ public class AppExceptionHandler {
 
     /**
      * Builds a standardized error response for exceptions.
-     * 
+     *
      * @param exception the exception that was thrown
      * @param status    the HTTP status to return
      * @return a ResponseEntity containing an ErrorResponse with the specified
-     *         status and exception message
+     * status and exception message
      */
     private ResponseEntity<ErrorResponse<?>> buildErrorResponse(Exception exception, HttpStatus status) {
         return new ResponseEntity<>(
