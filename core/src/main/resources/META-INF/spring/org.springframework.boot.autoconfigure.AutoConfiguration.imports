@@ -1,0 +1,4 @@
+com.hnh.enterprise.core.security.SecurityConfiguration
+com.hnh.enterprise.core.rest.AuthAPIConfiguration
+com.hnh.enterprise.core.open_api.OpenApiConfiguration
+com.hnh.enterprise.core.logging.LoggingConfiguration
