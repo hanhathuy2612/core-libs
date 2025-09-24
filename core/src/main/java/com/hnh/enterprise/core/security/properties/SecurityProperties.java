@@ -50,6 +50,9 @@ import java.util.List;
 @Setter
 @ConfigurationProperties(prefix = "app.security")
 public class SecurityProperties {
+
+    private Boolean enabled;
+
     @JsonProperty("permit-all-matchers")
     private List<String> permitAllMatchers = new ArrayList<>();
 

@@ -15,6 +15,11 @@ import java.util.List;
 @ConfigurationProperties("app.open-api")
 public class OpenApiProperties {
     /**
+     * Enabled
+     */
+    private Boolean enabled;
+
+    /**
      * Servers
      */
     @JsonProperty("servers")
