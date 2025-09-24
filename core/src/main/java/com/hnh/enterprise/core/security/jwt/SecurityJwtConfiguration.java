@@ -8,6 +8,8 @@ import com.nimbusds.jose.util.Base64;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -22,12 +24,11 @@ import static com.hnh.enterprise.core.security.constant.Constant.JWT_ALGORITHM;
 
 
 @Configuration
-@RequiredArgsConstructor
+@EnableConfigurationProperties({SecurityProperties.class})
+@ConditionalOnProperty(value = "app.security.enabled", havingValue = "true")
 public class SecurityJwtConfiguration {
 
     private static final Logger LOG = LoggerFactory.getLogger(SecurityJwtConfiguration.class);
-
-    private final SecurityProperties securityProperties;
 
     @Bean
     public RegularJwtDecoder regularJwtDecoder(SecurityProperties securityProperties, UserService userService) {
@@ -46,11 +47,11 @@ public class SecurityJwtConfiguration {
     }
 
     @Bean
-    public JwtEncoder jwtEncoder() {
-        return new NimbusJwtEncoder(new ImmutableSecret<>(getSecretKey()));
+    public JwtEncoder jwtEncoder(SecurityProperties securityProperties) {
+        return new NimbusJwtEncoder(new ImmutableSecret<>(getSecretKey(securityProperties)));
     }
 
-    private SecretKey getSecretKey() {
+    private SecretKey getSecretKey(SecurityProperties securityProperties) {
         byte[] keyBytes = Base64.from(securityProperties.getJwt().getBase64Secret()).decode();
         return new SecretKeySpec(keyBytes, 0, keyBytes.length, JWT_ALGORITHM.getName());
     }

@@ -1,10 +1,11 @@
 package com.hnh.enterprise.core.repository;
 
 import com.hnh.enterprise.core.entity.User;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -13,7 +14,7 @@ import java.util.Optional;
  * Spring Data JPA repository for the {@link User} entity.
  */
 @Repository
-public interface UserRepository extends BaseRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     String USERS_BY_EMAIL_CACHE = "usersByEmail";
 
     @EntityGraph(attributePaths = "authorities")
@@ -21,7 +22,7 @@ public interface UserRepository extends BaseRepository<User, Long> {
 
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.authorities WHERE u.email = :email")
     @EntityGraph(attributePaths = "authorities")
-    Optional<User> findByEmailWithAuthorities(String email);
+    Optional<User> findByEmailWithAuthorities(@Param("email") String email);
 
     Optional<User> findByEmail(String email);
 }

@@ -25,7 +25,7 @@ public class FirebaseJwtDecoderStrategy implements JwtDecoderStrategy {
         try {
             FirebaseAuth.getInstance().verifyIdToken(token);
             return true;
-        } catch (FirebaseAuthException e) {
+        } catch (Exception e) {
             return false;
         }
     }

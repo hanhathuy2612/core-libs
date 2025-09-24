@@ -109,6 +109,7 @@ public class AppExceptionHandler {
     private ResponseEntity<ErrorResponse<?>> buildErrorResponse(Exception exception, HttpStatus status) {
         return new ResponseEntity<>(
                 ErrorResponse.builder()
+                        .status(status)
                         .message(exception.getMessage())
                         .code(status.value())
                         .build(),

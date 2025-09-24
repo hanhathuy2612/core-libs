@@ -1,10 +1,5 @@
 package com.hnh.enterprise.core.service.impl;
 
-import java.util.Collections;
-import java.util.Set;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.hnh.enterprise.core.constants.Constants;
 import com.hnh.enterprise.core.dto.TokenDTO;
 import com.hnh.enterprise.core.entity.Authority;
@@ -18,10 +13,15 @@ import com.hnh.enterprise.core.rest.response.RegisterResponse;
 import com.hnh.enterprise.core.security.Authorities;
 import com.hnh.enterprise.core.service.AuthenticationService;
 import com.hnh.enterprise.core.service.TokenService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
+import java.util.Collections;
+import java.util.Set;
 
-@AllArgsConstructor
+@Service
+@RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;

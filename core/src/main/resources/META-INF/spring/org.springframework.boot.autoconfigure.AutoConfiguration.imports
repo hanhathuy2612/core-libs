@@ -1,4 +1,9 @@
 com.hnh.enterprise.core.security.SecurityConfiguration
-com.hnh.enterprise.core.rest.AuthAPIConfiguration
+com.hnh.enterprise.core.security.jwt.SecurityJwtConfiguration
+com.hnh.enterprise.core.security.JpaAuditConfiguration
+com.hnh.enterprise.core.rest.RestAutoConfiguration
 com.hnh.enterprise.core.open_api.OpenApiConfiguration
 com.hnh.enterprise.core.logging.LoggingConfiguration
+com.hnh.enterprise.core.repository.CoreRepositoryAutoConfiguration
+com.hnh.enterprise.core.service.CoreServiceAutoConfiguration
+com.hnh.enterprise.core.exception.AppExceptionHandler

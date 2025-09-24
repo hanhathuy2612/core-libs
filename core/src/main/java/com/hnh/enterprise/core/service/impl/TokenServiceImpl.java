@@ -23,7 +23,9 @@ import com.hnh.enterprise.core.security.properties.SecurityProperties;
 import com.hnh.enterprise.core.service.TokenService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
     private final JwtEncoder jwtEncoder;

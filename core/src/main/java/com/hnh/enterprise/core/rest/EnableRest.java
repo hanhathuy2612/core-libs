@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import({AuthAPIConfiguration.class})
-public @interface EnableAuthAPI {
+@Import({RestAutoConfiguration.class})
+public @interface EnableRest {
 }
