@@ -1,5 +1,8 @@
 package com.hnh.enterprise.core.security;
 
+import com.hnh.enterprise.core.security.api_key.ApiKeyAuthFilter;
+import com.hnh.enterprise.core.security.api_key.ApiKeyService;
+import com.hnh.enterprise.core.security.properties.SecurityProperties;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -7,11 +10,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Service;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import com.hnh.enterprise.core.security.properties.SecurityProperties;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,25 +33,34 @@ import java.util.Objects;
  *
  * @param securityProperties the security properties containing configuration details such as CORS settings and permit-all matchers.
  */
-public record SecurityService(SecurityProperties securityProperties) {
-    
+@Service
+public record SecurityService(SecurityProperties securityProperties, ApiKeyService apiKeyService) {
+
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        
+
         this.buildAuthorizeHttpRequests(http);
-        
+
+        this.addApiKeyFilter(http);
+
         http.exceptionHandling(exceptions ->
                         exceptions
                                 .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                                 .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
-        
+
         return http.build();
     }
-    
+
+    public void addApiKeyFilter(HttpSecurity http) {
+        if (Boolean.TRUE.equals(securityProperties.getApiKey().getEnabled())) {
+            http.addFilterBefore(new ApiKeyAuthFilter(securityProperties.getApiKey().getHeaderName(), apiKeyService), UsernamePasswordAuthenticationFilter.class);
+        }
+    }
+
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
@@ -73,12 +85,12 @@ public record SecurityService(SecurityProperties securityProperties) {
             config.setAllowedMethods(List.of("*"));
             config.setAllowedOriginPatterns(List.of("*"));
         }
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-    
+
     /**
      * @param http http
      * @throws Exception exception
@@ -93,10 +105,10 @@ public record SecurityService(SecurityProperties securityProperties) {
                     }
             );
         }
-        
+
         http.authorizeHttpRequests(
                 authorize -> authorize.anyRequest().authenticated()
         );
     }
-    
+
 }

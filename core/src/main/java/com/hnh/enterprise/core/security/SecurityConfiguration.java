@@ -22,18 +22,8 @@ import org.springframework.web.filter.CorsFilter;
 @ComponentScan(basePackages = "com.hnh.enterprise.core.security")
 public class SecurityConfiguration {
     @Bean
-    public SecurityMetersService securityMetersService(MeterRegistry registry) {
-        return new SecurityMetersService(registry);
-    }
-
-    @Bean
     public MeterRegistry meterRegistry() {
         return new SimpleMeterRegistry();
-    }
-
-    @Bean
-    public SecurityService securityService(SecurityProperties securityProperties) {
-        return new SecurityService(securityProperties);
     }
 
     @Bean

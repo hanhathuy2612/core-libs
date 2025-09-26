@@ -8,12 +8,14 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import com.hnh.enterprise.core.security.SecurityMetersService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 /**
  * Strategy for decoding regular JWT tokens (non-Firebase).
  * This handles the standard JWT tokens used by the application.
  */
 @Slf4j
+@Service
 public class RegularJwtDecoderStrategy implements JwtDecoderStrategy {
     
     private final SecurityMetersService metersService;

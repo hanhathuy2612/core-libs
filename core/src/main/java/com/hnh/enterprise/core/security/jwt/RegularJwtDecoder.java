@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 import static com.hnh.enterprise.core.security.constant.Constant.JWT_ALGORITHM;
 
+@Service
 public class RegularJwtDecoder {
     private final UserService userService;
     private final NimbusJwtDecoder nimbusJwtDecoder;

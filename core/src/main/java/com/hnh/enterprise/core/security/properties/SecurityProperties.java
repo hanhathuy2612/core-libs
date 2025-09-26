@@ -60,6 +60,9 @@ public class SecurityProperties {
     @JsonProperty("jwt")
     private Jwt jwt;
 
+    @JsonProperty("api-key")
+    private ApiKey apiKey = new ApiKey();
+
     @Getter
     @Setter
     public static class Cors {
@@ -84,5 +87,12 @@ public class SecurityProperties {
         private long tokenValidityInSecondsForRememberMe;
 
         private long refreshTokenValidityInSeconds;
+    }
+
+    @Getter
+    @Setter
+    public static class ApiKey {
+        private Boolean enabled;
+        private String headerName;
     }
 }
