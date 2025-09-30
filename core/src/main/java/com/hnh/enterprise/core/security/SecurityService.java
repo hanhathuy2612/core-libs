@@ -61,7 +61,8 @@ public record SecurityService(SecurityProperties securityProperties, ApiKeyServi
 
     public void addApiKeyFilter(HttpSecurity http) {
         if (Boolean.TRUE.equals(securityProperties.getApiKey().getEnabled())) {
-            http.addFilterBefore(new ApiKeyAuthFilter(securityProperties.getApiKey().getHeaderName(), apiKeyService), UsernamePasswordAuthenticationFilter.class);
+            ApiKeyAuthFilter filter = new ApiKeyAuthFilter(securityProperties.getApiKey().getHeaderName(), apiKeyService);
+            http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         }
     }
 

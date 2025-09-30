@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 /**
@@ -15,7 +16,7 @@ import java.time.Instant;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-public class AuditingDTO {
+public class AuditingDTO implements Serializable {
 
     private String createdBy;
 
