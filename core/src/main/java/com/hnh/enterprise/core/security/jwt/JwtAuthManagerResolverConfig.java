@@ -15,11 +15,11 @@ import java.util.Map;
 @Configuration
 public class JwtAuthManagerResolverConfig {
     @Bean
-    AuthenticationManagerResolver<HttpServletRequest> jwtResolver(KeycloakAuthConfig kcCfg, RegularAuthConfig regCfg, FirebaseAuthConfig fbCfg) {
+    AuthenticationManagerResolver<HttpServletRequest> jwtResolver(KeycloakAuthConfig keycloakAuthConfig, RegularAuthConfig regularAuthConfig, FirebaseAuthConfig firebaseAuthConfig) {
         Map<String, AuthenticationManager> byIssuer = Map.of(
-                kcCfg.issuer(), kcCfg.authenticationManager(),
-                regCfg.issuer(), regCfg.authenticationManager(),
-                fbCfg.issuer(), fbCfg.authenticationManager()
+                keycloakAuthConfig.issuer(), keycloakAuthConfig.authenticationManager(),
+                regularAuthConfig.issuer(), regularAuthConfig.authenticationManager(),
+                firebaseAuthConfig.issuer(), firebaseAuthConfig.authenticationManager()
         );
         return new JwtIssuerAuthenticationManagerResolver(byIssuer::get);
     }
