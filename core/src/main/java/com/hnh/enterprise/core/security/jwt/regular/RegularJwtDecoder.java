@@ -1,4 +1,4 @@
-package com.hnh.enterprise.core.security.jwt;
+package com.hnh.enterprise.core.security.jwt.regular;
 
 import com.hnh.enterprise.core.entity.Authority;
 import com.hnh.enterprise.core.entity.User;
@@ -6,9 +6,9 @@ import com.hnh.enterprise.core.security.properties.SecurityProperties;
 import com.hnh.enterprise.core.service.UserService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -18,8 +18,7 @@ import java.util.Map;
 
 import static com.hnh.enterprise.core.security.constant.Constant.JWT_ALGORITHM;
 
-@Service
-public class RegularJwtDecoder {
+public class RegularJwtDecoder implements JwtDecoder {
     private final UserService userService;
     private final NimbusJwtDecoder nimbusJwtDecoder;
 
@@ -34,6 +33,7 @@ public class RegularJwtDecoder {
         this.userService = userService;
     }
 
+    @Override
     public Jwt decode(String token) throws JwtException {
         Jwt jwt = nimbusJwtDecoder.decode(token);
 

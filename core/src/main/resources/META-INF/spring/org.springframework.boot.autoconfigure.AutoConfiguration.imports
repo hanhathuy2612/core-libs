@@ -1,5 +1,4 @@
 com.hnh.enterprise.core.security.SecurityConfiguration
-com.hnh.enterprise.core.security.jwt.SecurityJwtConfiguration
 com.hnh.enterprise.core.security.JpaAuditConfiguration
 com.hnh.enterprise.core.rest.RestAutoConfiguration
 com.hnh.enterprise.core.open_api.OpenApiConfiguration

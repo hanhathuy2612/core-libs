@@ -61,6 +61,7 @@ public class TokenServiceImpl implements TokenService {
 
         JwtClaimsSet.Builder builder = JwtClaimsSet.builder()
                 .issuedAt(now)
+                .issuer(securityProperties.getJwt().getIssuer())
                 .expiresAt(validity)
                 .subject(authentication.getName())
                 .claim(AUTHORITIES_CLAIM, authorities);

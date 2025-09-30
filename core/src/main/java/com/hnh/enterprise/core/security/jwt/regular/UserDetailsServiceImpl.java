@@ -1,11 +1,10 @@
-package com.hnh.enterprise.core.security;
+package com.hnh.enterprise.core.security.jwt.regular;
 
 import com.hnh.enterprise.core.entity.Authority;
 import com.hnh.enterprise.core.entity.User;
 import com.hnh.enterprise.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

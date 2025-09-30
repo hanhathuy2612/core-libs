@@ -60,8 +60,26 @@ public class SecurityProperties {
     @JsonProperty("jwt")
     private Jwt jwt;
 
+    private Oauth2 oauth2;
+
     @JsonProperty("api-key")
     private ApiKey apiKey = new ApiKey();
+
+
+    @Getter
+    @Setter
+    public static class Oauth2 {
+        private Keycloak keycloak = new Keycloak();
+
+        @Getter
+        @Setter
+        public static class Keycloak {
+            private Boolean enabled = false;
+            private String issuerUri;
+            private String jwkSetUri;
+            private String clientId;
+        }
+    }
 
     @Getter
     @Setter
@@ -81,6 +99,8 @@ public class SecurityProperties {
     public static class Jwt {
         @JsonProperty("base64-secret")
         private String base64Secret;
+
+        private String issuer;
 
         private long tokenValidityInSeconds;
 

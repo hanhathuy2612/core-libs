@@ -3,6 +3,8 @@ package com.hnh.enterprise.core.security;
 import com.hnh.enterprise.core.security.api_key.ApiKeyAuthFilter;
 import com.hnh.enterprise.core.security.api_key.ApiKeyService;
 import com.hnh.enterprise.core.security.properties.SecurityProperties;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.authentication.AuthenticationManagerResolver;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -36,8 +38,9 @@ import java.util.Objects;
 @Service
 public record SecurityService(SecurityProperties securityProperties, ApiKeyService apiKeyService) {
 
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(Customizer.withDefaults())
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManagerResolver<HttpServletRequest> jwtResolver) throws Exception {
+        http
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -45,12 +48,13 @@ public record SecurityService(SecurityProperties securityProperties, ApiKeyServi
 
         this.addApiKeyFilter(http);
 
-        http.exceptionHandling(exceptions ->
+        http
+                .exceptionHandling(exceptions ->
                         exceptions
                                 .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                                 .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oauth2 -> oauth2.authenticationManagerResolver(jwtResolver));
 
         return http.build();
     }

@@ -3,11 +3,13 @@ package com.hnh.enterprise.core.security;
 import com.hnh.enterprise.core.security.properties.SecurityProperties;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManagerResolver;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,9 +29,11 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityService securityService)
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   SecurityService securityService,
+                                                   AuthenticationManagerResolver<HttpServletRequest> jwtResolver)
             throws Exception {
-        return securityService.filterChain(http);
+        return securityService.filterChain(http, jwtResolver);
     }
 
     @Bean

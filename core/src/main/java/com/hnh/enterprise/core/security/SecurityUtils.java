@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static com.hnh.enterprise.core.security.jwt.RegularJwtDecoder.USER_ID;
+import static com.hnh.enterprise.core.security.jwt.regular.RegularJwtDecoder.USER_ID;
 
 /**
  * Utility class for Spring Security.
