@@ -70,6 +70,7 @@ public class SecurityProperties {
     @Setter
     public static class Oauth2 {
         private Keycloak keycloak = new Keycloak();
+        private Firebase firebase = new Firebase();
 
         @Getter
         @Setter
@@ -78,6 +79,14 @@ public class SecurityProperties {
             private String issuerUri;
             private String jwkSetUri;
             private String clientId;
+        }
+
+        @Getter
+        @Setter
+        public  static class Firebase {
+            private Boolean enabled = false;
+            private String projectId;
+            private String issuerUri;
         }
     }
 

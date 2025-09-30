@@ -1,5 +1,6 @@
 package com.hnh.enterprise.core.security.jwt;
 
+import com.hnh.enterprise.core.security.jwt.firebase.FirebaseAuthConfig;
 import com.hnh.enterprise.core.security.jwt.keycloak.KeycloakAuthConfig;
 import com.hnh.enterprise.core.security.jwt.regular.RegularAuthConfig;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +15,11 @@ import java.util.Map;
 @Configuration
 public class JwtAuthManagerResolverConfig {
     @Bean
-    AuthenticationManagerResolver<HttpServletRequest> jwtResolver(KeycloakAuthConfig kcCfg, RegularAuthConfig regCfg) {
+    AuthenticationManagerResolver<HttpServletRequest> jwtResolver(KeycloakAuthConfig kcCfg, RegularAuthConfig regCfg, FirebaseAuthConfig fbCfg) {
         Map<String, AuthenticationManager> byIssuer = Map.of(
                 kcCfg.issuer(), kcCfg.authenticationManager(),
-                regCfg.issuer(), regCfg.authenticationManager()
+                regCfg.issuer(), regCfg.authenticationManager(),
+                fbCfg.issuer(), fbCfg.authenticationManager()
         );
         return new JwtIssuerAuthenticationManagerResolver(byIssuer::get);
     }

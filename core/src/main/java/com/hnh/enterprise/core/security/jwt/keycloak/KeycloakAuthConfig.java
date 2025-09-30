@@ -69,7 +69,6 @@ public class KeycloakAuthConfig {
         };
     }
 
-    @Bean
     public String issuer() {
         return securityProperties.getOauth2().getKeycloak().getIssuerUri();
     }
