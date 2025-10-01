@@ -26,10 +26,10 @@ import java.util.Map;
 @EnableConfigurationProperties(SecurityProperties.class)
 @ConditionalOnProperty(prefix = "app.security.oauth2", name = "keycloak.enabled", havingValue = "true")
 public class KeycloakAuthConfig {
-    private final SecurityProperties securityProperties;
+    private final SecurityProperties.Oauth2.Keycloak keycloakProps;
 
     public KeycloakAuthConfig(SecurityProperties securityProperties) {
-        this.securityProperties = securityProperties;
+        this.keycloakProps = securityProperties.getOauth2().getKeycloak();
     }
 
     @Bean(value = "keycloakAuthenticationManager")
@@ -45,7 +45,7 @@ public class KeycloakAuthConfig {
 
     @Bean
     public JwtDecoder keycloakDecoder() {
-        final String ISSUER = securityProperties.getOauth2().getKeycloak().getIssuerUri();
+        final String ISSUER = keycloakProps.getIssuerUri();
         return JwtDecoders.fromIssuerLocation(ISSUER);
     }
 
@@ -57,7 +57,7 @@ public class KeycloakAuthConfig {
             Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
             if (resourceAccess != null) {
                 @SuppressWarnings("unchecked")
-                Map<String, Object> client = (Map<String, Object>) resourceAccess.get(securityProperties.getOauth2().getKeycloak().getClientId());
+                Map<String, Object> client = (Map<String, Object>) resourceAccess.get(keycloakProps.getClientId());
                 if (client != null) {
                     @SuppressWarnings("unchecked")
                     List<String> roles = (List<String>) client.getOrDefault("roles", List.of());
@@ -70,6 +70,6 @@ public class KeycloakAuthConfig {
     }
 
     public String issuer() {
-        return securityProperties.getOauth2().getKeycloak().getIssuerUri();
+        return keycloakProps.getIssuerUri();
     }
 }
